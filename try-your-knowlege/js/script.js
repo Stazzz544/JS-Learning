@@ -1,20 +1,20 @@
-const stas = {
-	name: 'stas',
-	hi(){
-		console.log(`hi ${this.name}`)
+const human = {
+	sayName(){
+		console.log(`my name is ${this.name}`)
+	},
+	sayAge(){
+		console.log(`i am ${this.age} years old`)
 	}
 }
 
-function hello() {
-	console.log(`hello ${this.name}`)
+stas = Object.create(human)
+stas.name = 'stas',
+stas.age = 32
+
+Object.prototype.hello = function(){
+	console.log('hello')
 }
 
-hello.bind(stas)()
-stas.hi()
-
-setTimeout( stas.hi.bind(stas) , 1000);
-
-function a(){
-	stas.hi()
-}
-a()
+const shura = new Object({
+	name: 'shuraaaaaa'
+})
