@@ -4,7 +4,7 @@ function  hello() {
 function  hello1() {
 	console.log('hello', this)
 }
-//первой трочкой получим hello, аторой window - глобальный объект
+//первой cтрочкой получим hello, аторой window - глобальный объект
 
 const person = {
 	name: 'stas',

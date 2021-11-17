@@ -26,7 +26,7 @@ Object.prototype.sayHello = function() {
 
 
 //Object есть метод create с помощью которого мы создаём новые объекты
-//внутрь create можно переать то, что будет являтся прототипом новог объекта
+//внутрь create можно переать то, что будет являтся прототипом нового объекта
 
 const pasha = {//подительский объект
 	name :'pasha',
@@ -55,8 +55,12 @@ const str = new String('i am a string')
 str.func = function(){console.log(this
 	)}
 
-	console.log(str.String)
+str.func()//String {'i am a string', func: ƒ}
 
 //!!!!!Object - является самым главным классом в JS, поэтому у строки можно вытащить метод, который мы добавляли к объету глобальному объекту: Object.prototype.sayHello!!!!!
+Object.prototype.stringFunk = function(arg){
+	console.log(arg + ' Hello string! ' + this)
+}
 
-console.log(str.sayHello())
+str.stringFunk('argument')
+//argument Hello string! i am a string 

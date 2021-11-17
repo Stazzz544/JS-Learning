@@ -1,20 +1,26 @@
-const human = {
-	sayName(){
-		console.log(`my name is ${this.name}`)
-	},
-	sayAge(){
-		console.log(`i am ${this.age} years old`)
-	}
+
+Object.prototype.logInfo = function(profession){
+	console.group(`Log info ${this.name}`)
+	console.log(`name: ${this.name}`)
+	console.log(`age: ${this.age}`)
+	console.log(`profession: ${profession}`)
+	console.groupEnd()
 }
 
-stas = Object.create(human)
-stas.name = 'stas',
-stas.age = 32
-
-Object.prototype.hello = function(){
-	console.log('hello')
+const nika ={
+	name: 'Nika',
+	age: 28
 }
 
-const shura = new Object({
-	name: 'shuraaaaaa'
-})
+const person = {
+	name: 'Stas',
+	age: 32,
+}
+
+nika.logInfo = person.logInfo
+//nika.logInfo('manager')
+//person.logInfo('kladovchik')
+
+const arr = [1, 5, 7]
+
+Array.prototype.mult = function(n){ return this.map(e => e*n)}
