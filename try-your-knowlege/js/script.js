@@ -1,21 +1,18 @@
-
-
-
-
-
-
-
-function logPerson(){
-	console.log(`Person: ${this.name} age: ${this.age}`)
+const url = 'https://jsonplaceholder.typicode.com/posts/1';
+async function myFetch(){
+ const response = await fetch(url);
+ const data = await response.json()
+ console.log(data)
+ document.querySelector('#out').innerHTML = 
+	`
+	<h1>${data.title}</h1>
+	<p>${data.body}</p>
+	`
 }
 
+document.querySelector('#btn').onclick = show
 
-function bind(context, fn){
-	return function(...args){
-		fn.apply(context, args)
-	}
+async function show(){
+	await myFetch()
+	
 }
-
-const person1 = {name: 'stas', age: 22}
-
-bind(person1, logPerson)()
