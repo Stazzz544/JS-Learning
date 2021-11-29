@@ -1,68 +1,68 @@
-//Замыкание это функция внутри другой функции
+// Классический способ создания объекта
+// const animal = {
+// 	name: 'animal',
+// 	age: 5,
+// 	hasTail: true,
+// }
 
 
-function createCulcFunction(n) {
-	return function() {
-		console.log(1000 * n)
+//Более удобный способ
+//Классы всегда пишем с большой буквы
+class Animal {
+
+	static type = 'ANIMAL' //статический метод. При обращении доступен только у класса. у наследников этого метода не будет
+
+	constructor(options){
+		this.name = options.name
+		this.age = options.age
+		this.hasTail = options.hasTail
+	}
+
+	voice() { // метод доступен всем наследникам
+		console.log(`I am the Animal`)
 	}
 }
 
-createCulcFunction(42)// при таком вызове ничего не увидим так как вернётся просто функция(вторая)
+const animal = new Animal({//В этом случае наш объект является наседником класса Animal
+	name: 'Animal',
+	age: 5,
+	hasTail: true
+})
+//При просмотре объекта в браузере - в прототипе мы увидем сначала class Animal, а уже уровнем ниже Object
 
-const calc = createCulcFunction(42)//в этом месте произошло замыкание 42(n) из верхей функции в нижнюю
-calc()//теперь можно вызывть  calc, а это и есть внутренняя функция, без параметров, так как теперь там замкнута 42(n)
 
-//===============
-function createIncrementor(n){
-	return function(num){
-		return n + num
+//Наследование класса от класса
+class Cat extends Animal {
+	static type = 'CAT' // обращение через класс - Cat.type
+
+	//Если в этом ка
+	constructor(options) {
+		super(options)//ключевое слово, чтобы вызвать родительский конструктор
+		this.color = options.color
 	}
-}
 
-const addOne = createIncrementor(1)
-const addTen = createIncrementor(10)
-console.log(addOne(10))  //11
-console.log(addOne(41))  //42
-console.log(addTen(10))  //20
-console.log(addTen(41))  //51
-//Функция addOne замкнула в себе единицу и постоянно ее прибавляет
-//Функция addTen замкнула в себе десятку и постоянно ее прибавляет
-
-//Более жизненный пример с генерацией url адреса
-
-function urlGenerator(domain){
-	return function(url){
-		return `https://${url}.${domain}`
+	//можно переписывать родительские методы
+	voice() {
+		super.voice()// это вызовит одноимённый метод у родителя вместе с тем, что мы перезаписали
+		console.log('i am cat')
 	}
-}
-
-const comUrl = urlGenerator('com')
-console.log(comUrl('google'))//https://google.com
-console.log(comUrl('amazon'))//https://amazon.com
-
-const ruUrl = urlGenerator('ru')
-console.log(ruUrl('yandex'))//https://yandex.ru
-console.log(ruUrl('sberbank'))//https://sberbank.ru
-
-
-
-//задача от Владилена
-
-const person1 = {name: 'Михаил', age: 22, job: 'Frontend'};
-const person2 = {name: 'Елена', age: 19, job: 'SMM'};
-
-
-function logPersons(){
-	console.log(`Person: ${this.name}, ${this.age}, ${this.job}`)
-}
-
-function bind(context, fn){
-	return function(...arg){
-		fn.apply(context, arg)
+	//геттер у объекта(что-то возвращает)
+	get ageInfo() {
+		return this.age * 7//конвертируем возраст животного в человеческие года
 	}
+	//seter у объекта, что-то устанавливает
+	set ageInfo(newAge) {
+		this.age = newAge// установит новый возраст
+	}
+
 }
 
-bind(person1, logPersons)() //Person: Михаил, 22, Frontend
-bind(person2, logPersons)() //Person: Елена, 19, SMM
+const cat = new Cat({
+	name: 'Cat',
+	age: 7,
+	hasTail: true,
+	color: 'white',
+	eye: 'green',//не запишется. Не в конструкторе Animal, от которого наследуется конструктор Cat
+})
 
-//===
+//Если мы добавим свойство, которого нет, например цвет глаз - то оно не появится в объекте, так как его нет в конструкторе класса
